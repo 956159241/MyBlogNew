@@ -1,11 +1,5 @@
 <template>
-  <p>尾部</p>
+  <div class="footer">
+    <p>尾部</p>
+  </div>
 </template>
-<script>
-  export default{
-    data () {
-    }
-  }
-</script>
-<style scoped>
-</style>
