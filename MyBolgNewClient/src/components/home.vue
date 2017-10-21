@@ -1,15 +1,16 @@
 <template>
-  <p>中间部分</p>
+  <p>这是首页</p>
 </template>
 
 <script>
 export default {
-  name: 'hello',
+  name: 'home',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
-  }
+  },
+  comments: {}
 }
 </script>
 
