@@ -17,5 +17,8 @@ namespace MyBlogNew.Entity
         public string Name { get; set; }
         [Column("Url")]
         public string Url { get; set; }
+        [Column("Test")]
+        public string Test { get; set; }
+
     }
 }

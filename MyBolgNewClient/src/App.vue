@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header-component></header-component>
-    <div class="main" >
+    <div>
         <router-view></router-view>
     </div>
     <footer-component></footer-component>
@@ -9,6 +9,7 @@
 </template>
 
 <script>
+  var $ = require('jquery')
   import headerComponent from './components/header.vue'
   import footerComponent from './components/footer.vue'
   export default {
@@ -21,12 +22,15 @@
     },
     components: {headerComponent, footerComponent},
     mounted: function () {
-      this.$http.get('/api/Index/GetTheme').then(response => {
-        console.log(response)
-        console.log(response.data)
-        console.log(response.data.Name)
-        this.Theme = response.data.Name
-      })
+//      this.$http.get('/api/Index/GetTheme').then(response => {
+//        console.log(response)
+//        console.log(response.data)
+//        console.log(response.data.Name)
+//        this.Theme = response.data.Name
+//      })
+    },
+    clic: function () {
+      console.log($, global, this)
     }
   }
 </script>

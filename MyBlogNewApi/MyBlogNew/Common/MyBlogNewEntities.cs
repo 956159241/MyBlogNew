@@ -8,6 +8,7 @@ using MyBlogNew.Entity;
 
 namespace MyBlogNew.Common
 {
+    [DbConfigurationType(typeof(MySql.Data.Entity.MySqlEFConfiguration))]
     public class MyBlogNewEntities : DbContext
     {
         public MyBlogNewEntities()
@@ -17,5 +18,7 @@ namespace MyBlogNew.Common
         public DbSet<theme> themes { get; set; }
 
         public DbSet<navigation> navigations { get; set; }
+
+        public DbSet<diary> diaries { get; set; }
     }
 }
