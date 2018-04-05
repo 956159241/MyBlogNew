@@ -6,6 +6,7 @@ import messages from '@/views/messages'
 import shows from '@/views/shows'
 import reads from '@/views/reads'
 import itBlogs from '@/views/itBlogs'
+import essay from '@/views/essay'
 
 Vue.use(Router)
 
@@ -45,6 +46,11 @@ export default new Router({
       path: '/itBlogs',
       name: 'itBlogs',
       component: itBlogs
+    },
+    {
+      path: '/essay',
+      name: 'essay',
+      component: essay
     }
   ]
 })

@@ -3,7 +3,7 @@
     <!--头部轮播-->
     <div class="head">
       <div class="box2">
-        <div class="banner_tit">动漫人物</div>
+        <div class="banner_tit">推荐书籍</div>
         <div class="hot_role">
           <ul id="centerwell">
             <li>
@@ -201,9 +201,35 @@
       </div>
     </div>
     <div class="row" style="background-color: black;margin-top: 20px;">
-      <div class="col-lg-8" style="background-color: red">
-        我在左边
+      <!--左侧阅读内容-->
+      <div class="col-lg-8">
+        <ul class="reads">
+          <li v-for="item in reads" class="single-read">
+            <!--<p>{{item.Content.substr(0,100)}}……<a @click="sendParams">跳转到单个文章界面</a></p>-->
+            <div class="other">
+              <img v-bind:src="item.Picture" style="width:80px;height:80px;">
+              <span>测试Id：{{item.Id}}</span>
+              <span>时间：{{item.Time.substr(0,10) | formatDate}}</span>
+              <span>类型：{{item.Type}}</span>
+              <span>作者：{{item.Author}}</span>
+              <span>标题：{{item.Title}}</span>
+            </div>
+          </li>
+        </ul>
+        <!--分页-->
+        <div class="pages">
+          <!--Bootstrap-->
+          <ul class="pagination">
+            <li><a class="first-page" v-on:click="jumpToFirstPage()">首页</a></li>
+            <li><a class="page-count"  v-on:click="jumpToPage(currentPage)">上一页</a></li>
+            <li v-bind:class="{ 'active': currentPage == (index - 1)}" v-on:click="jumpToPage(index)"  v-for="index in indexs"><a class="page-count">{{index}}</a></li>
+            <li><a class="page-count"  v-on:click="jumpToPage(currentPage + 2)" v-bind:class="">下一页</a></li>
+            <li><a class="last-page" v-on:click="jumpToLastPage()">末页</a></li>
+            <li><a>共 {{totalPages}} 页</a></li>
+          </ul>
+        </div>
       </div>
+      <!--右侧简介内容-->
       <div class="col-lg-4" style="background-color: yellow;">
         我在右边
       </div>
@@ -218,7 +244,12 @@
     name: 'reads',
     data () {
       return {
-        msg: 'Welcome to Your Vue.js App'
+        index: '',
+        reads: '',
+        indexs: 3,  // 每次请求多少条数据
+        pageSize: 3,
+        currentPage: [],
+        totalPages: 3
       }
     },
     mounted: function () {
@@ -234,6 +265,47 @@
           $(this).find('h3').addClass('on')
         }
       })
+      this.$http.get('/api/Read/GetReads?pageIndex=0&pageSize=3').then(response => {
+        this.index = 1
+        this.currentPage = 0
+        this.reads = response.data
+      })
+    },
+    methods: {
+      jumpToPage: function (index) {
+        if (index - 1 < this.totalPages) {
+          this.$http.get('/api/Read/GetReads', {
+            params: {
+              pageIndex: index - 1,
+              pageSize: this.pageSize
+            }
+          }).then(response => {
+            this.currentPage = (index - 1)
+            this.reads = response.data
+          })
+        }
+      },
+      jumpToFirstPage: function () {
+        this.$http.get('/api/Read/GetReads', {params: {pageIndex: 0, pageSize: this.pageSize}}).then(response => {
+          this.currentPage = 0
+          this.reads = response.data
+        })
+      },
+      jumpToLastPage: function () {
+        this.$http.get('/api/Read/GetReads', {params: {pageIndex: this.totalPages - 1, pageSize: this.pageSize}}).then(response => {
+          this.currentPage = this.totalPages - 1
+          this.reads = response.data
+        })
+      }
+//      sendParams: function () {
+//        this.$router.push({
+//          path: 'yourPath',
+//          name: '要跳转的路径的 name,在 router 文件夹下的 index.js 文件内找',
+//          params: {
+//              name: 'name'
+//          },dataObj: this.msg}
+//          )
+//      }
     }
   }
 </script>

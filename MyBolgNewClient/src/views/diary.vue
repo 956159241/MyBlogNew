@@ -65,7 +65,8 @@
       }
     },
     mounted: function () {
-      this.$http.get('/api/Diary/GetDiaries?pageIndex=0&pageSize=3').then(response => {
+//      this.$http.get('/api/Diary/GetDiaries?pageIndex=0&pageSize=3').then(response => {
+      this.$http.get('/api/Diary/GetDiaries', {'pageIndex': 0, 'pageSize': 3}).then(response => {
         this.index = 1
         this.currentPage = 0
         this.diaries = response.data
